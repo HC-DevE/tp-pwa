@@ -36,11 +36,11 @@ const links = [{
 
 
 <template>
+  <!-- <VitePwaManifest /> -->
+  <NuxtPwaManifest />
   <div>
     <UContainer>
-      <!-- <NuxtPwaManifest /> -->
       <UHorizontalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" />
-      <VitePwaManifest />
       <NuxtPage />
     </UContainer>
 
