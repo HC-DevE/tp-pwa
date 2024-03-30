@@ -85,11 +85,11 @@ const takePicture = () => {
     <div>
         <h1>Camera test</h1>
         <p>
-            <UButton @click="takePicture" size="sm">Take picture</UButton>
+            <UButton color="blue" @click="takePicture" size="sm">Take picture</UButton>
         </p>
         <p>
-            <UButton color="green" @click="startStream" size="sm">Start stream</UButton>
-            <UButton color="red" @click="stopStream" size="sm">Stop stream</UButton>
+            <UButton variant="link" color="green" @click="startStream" size="sm">Start stream</UButton>
+            <UButton variant="link" color="red" @click="stopStream" size="sm">Stop stream</UButton>
         </p>
         <p>
             <video ref="video" autoplay></video>

@@ -7,6 +7,7 @@
     </p>
     <p>
       <ul>
+        <USkeleton class="h-12 w-12" :ui="{ rounded: 'rounded-full' }" />
         <li v-for="message in messages" :key="message.id">
           {{ message.text }}
         </li>

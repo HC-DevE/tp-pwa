@@ -46,4 +46,7 @@ const links = [{
 
     <UNotifications />
   </div>
+  <AppFooter />
 </template>
+
+
