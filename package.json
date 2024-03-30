@@ -17,6 +17,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@nuxtjs/pwa": "^3.3.5",
     "@vite-pwa/nuxt": "^0.6.0",
     "vite-plugin-pwa": "^0.19.7"
   }
