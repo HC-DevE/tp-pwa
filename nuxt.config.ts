@@ -3,13 +3,16 @@ import { defineNuxtConfig } from "nuxt/config";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   pages: true,
-  modules: ["@nuxt/ui", "@vite-pwa/nuxt"],
+  modules: ["@nuxt/ui", "@vite-pwa/nuxt", 'nuxt-icon', 'nuxt-mapbox'],
   ui: {
     global: true,
     icons: ["mdi", "simple-icons"],
   },
   colorMode: {
     preference: 'light'
+  },
+  mapbox: {
+    accessToken: process.env.MAPBOX_TOKEN,
   },
   pwa: {
     manifest: {
@@ -36,6 +39,20 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: "/",
       runtimeCaching:[
+        {
+          urlPattern: '/',
+          handler: 'NetworkFirst',
+        },
+        // {
+        //   urlPattern: /^https:\/\/api\.mapbox\.com\/.*/i,
+        //   handler: "CacheFirst",
+        //   options: {
+        //     cacheName: "mapbox-cache",
+        //     cacheableResponse: {
+        //       statuses: [0, 200],
+        //     },
+        //   },
+        // },
         {
           urlPattern: ({ url }) => { return url.pathname.startsWith('/api') },
           handler: 'CacheFirst' as const,
@@ -80,8 +97,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      bucketUrl: process.env.BUCKET_URL,
+      MAPBOX_TOKEN: process.env.MAPBOX_TOKEN
     },
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 });

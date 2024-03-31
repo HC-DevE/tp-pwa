@@ -31,22 +31,37 @@ const links = [{
   label: 'Stream',
   icon: 'i-heroicons-video-camera',
   to: '/stream'
+}, {
+  label: 'About',
+  icon: 'i-simple-icon-info',
+  to: '/about'
 }]
 </script>
 
 
 <template>
-  <!-- <VitePwaManifest /> -->
-  <NuxtPwaManifest />
-  <div>
-    <UContainer>
-      <UHorizontalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" />
-      <NuxtPage />
-    </UContainer>
+  <NuxtLayout>
+    <VitePwaManifest />
+    <!-- <NuxtPwaManifest /> -->
+    <UCard>
+      <template #header>
+        <UHorizontalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" />
+      </template>
 
+      <template #default>
+        <UContainer>
+          <NuxtPage />
+        </UContainer>
+      </template>
+      
+      
+      <template #footer>
+        <Placeholder class="h-8" />
+        <!-- <AppFooter /> -->
+      </template>
+    </UCard>
     <UNotifications />
-  </div>
-  <AppFooter />
+  </NuxtLayout>
 </template>
 
 
