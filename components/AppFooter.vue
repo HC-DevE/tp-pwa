@@ -15,7 +15,7 @@ const links = [{
     <div>
         <h1>This is Auto imported footer</h1>
      <!-- UFooter component only for pro version ! -->
-    <UFooter :links="links">
+    <!-- <UFooter :links="links">
         <template #left>
             Copyright © {{ new Date().getFullYear() }}
         </template>
@@ -27,7 +27,7 @@ const links = [{
             <UButton icon="i-simple-icons-facebook" color="gray" variant="ghost" to="https://github.com/nuxt/nuxt"
                 target="_blank" />
         </template>
-    </UFooter>   
+    </UFooter>    -->
     </div>
     
 </template>

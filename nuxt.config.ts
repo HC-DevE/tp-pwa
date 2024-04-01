@@ -3,13 +3,19 @@ import { defineNuxtConfig } from "nuxt/config";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   pages: true,
-  modules: ["@nuxt/ui", "@vite-pwa/nuxt", 'nuxt-icon', 'nuxt-mapbox'],
+  modules: [
+    "@nuxt/ui",
+    "@vite-pwa/nuxt",
+    "nuxt-icon",
+    "nuxt-mapbox",
+    "@nuxtjs/tailwindcss",
+  ],
   ui: {
     global: true,
     icons: ["mdi", "simple-icons"],
   },
   colorMode: {
-    preference: 'light'
+    preference: "light",
   },
   mapbox: {
     accessToken: process.env.MAPBOX_TOKEN,
@@ -38,10 +44,10 @@ export default defineNuxtConfig({
     registerType: "autoUpdate",
     workbox: {
       navigateFallback: "/",
-      runtimeCaching:[
+      runtimeCaching: [
         {
-          urlPattern: '/',
-          handler: 'NetworkFirst',
+          urlPattern: "/",
+          handler: "NetworkFirst",
         },
         // {
         //   urlPattern: /^https:\/\/api\.mapbox\.com\/.*/i,
@@ -54,18 +60,20 @@ export default defineNuxtConfig({
         //   },
         // },
         {
-          urlPattern: ({ url }) => { return url.pathname.startsWith('/api') },
-          handler: 'CacheFirst' as const,
+          urlPattern: ({ url }) => {
+            return url.pathname.startsWith("/api");
+          },
+          handler: "CacheFirst" as const,
           options: {
-            cacheName: 'api-cache',
-            cacheableResponse: { statuses: [0, 200] }
-          }
-        }
-      ]
+            cacheName: "api-cache",
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+      ],
     },
     client: {
       installPrompt: true,
-      periodicSyncForUpdates: 3600 // 360 for testing only
+      periodicSyncForUpdates: 3600, // 360 for testing only
     },
     devOptions: {
       enabled: true,
@@ -74,8 +82,8 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1, maximum-scale=1",
       title: "Welfare App",
       // meta: [
       //   {
@@ -97,7 +105,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      MAPBOX_TOKEN: process.env.MAPBOX_TOKEN
+      MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
     },
   },
   devtools: { enabled: false },
