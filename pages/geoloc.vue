@@ -1,37 +1,38 @@
 <template>
-    <div>
-        <h1>Get Location</h1>
-        <p>
-            <UButton @click="getLocation">Get location</UButton>
-        </p>
-        <!-- <UTextarea color="primary" variant="outline" placeholder="Search..." /> -->
-        <!-- <p>
-        <ul>
-            <li v-for="location in locations" :key="location.id">
-                {{ location.coords.latitude }}, {{ location.coords.longitude }}
-            </li>
-        </ul>
-
-        </p> -->
-        <div v-if="!!location" class="h-screen flex-1">
-            <MapboxMap class="top-5 left-0 z-[0]" map-id="{ID}" :options="{
+    <div class="flex-1 h-screen right-0">
+        <div v-if="!location" >
+            <h1>Get Location</h1>
+            <p>
+                <UButton @click="getLocation">Get location</UButton>
+            </p>
+        </div>
+        <div v-if="!!location" class="flex-1">
+            <MapboxMap class="" map-id="{ID}" :options="{
                 style: 'mapbox://styles/hc-xdev/clufnmhuj00fd01r21qrah976', // style URL
                 center: [location.longitude, location.latitude], // starting position
-                zoom: 18, // starting zoom
-                _pointer: {
-                    coordinates: [location.longitude, location.latitude],
-                    title: 'Your location',
-                    description: 'You are here',
-                },
-            }" />
+                zoom: 18
+            }">
+                <MapboxDefaultMarker :marker-id="marker1" :lnglat="{ lng: location.longitude, lat: location.latitude }"
+                    :options="{ draggable: true }">
+                    <MapboxDefaultPopup popup-id="popup1" :lnglat="[0, 0]" :options="{
+                        closeOnClick: false
+                    }">
+                        <h1 class="test">
+                            Position actuelle
+                        </h1>
+                    </MapboxDefaultPopup>
+                </MapboxDefaultMarker>
+            </MapboxMap>
         </div>
 
     </div>
 </template>
 
 <script setup lang="ts">
+import type { _cursor } from '#tailwind-config/theme';
 import { ref } from 'vue';
 const toast = useToast();
+
 
 let location = ref<GeolocationCoordinates | null>();
 
@@ -59,6 +60,15 @@ const getLocation = async () => {
     //     description: 'Location has not been retrieved',
     //     icon: 'i-heroicons-x-circle',
     // });
+};
+
+const showAlert = () => {
+    toast.add({
+        id: 'alert',
+        title: 'Alert',
+        description: 'You clicked the button',
+        icon: 'i-heroicons-information-circle',
+    });
 };
 
 // onMounted(() => {

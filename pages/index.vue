@@ -7,6 +7,5 @@
   </div>
   <div>
     <AppAlert />
-    <!-- <AppFooter /> -->
   </div>
 </template>
