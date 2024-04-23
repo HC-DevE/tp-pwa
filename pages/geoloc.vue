@@ -1,13 +1,13 @@
 <template>
-    <div class="flex-1 h-screen right-0">
+    <!-- <div class="flex-1 h-screen right-0"> -->
         <div v-if="!location" >
             <h1>Get Location</h1>
             <p>
                 <UButton @click="getLocation">Get location</UButton>
             </p>
         </div>
-        <div v-if="!!location" class="flex-1">
-            <MapboxMap class="" map-id="{ID}" :options="{
+        <div v-if="!!location">
+            <MapboxMap class="fixed mt-20 top-0 right-0 justify-start w-[100px] h-[80vh]" map-id="{ID}" :options="{
                 style: 'mapbox://styles/hc-xdev/clufnmhuj00fd01r21qrah976', // style URL
                 center: [location.longitude, location.latitude], // starting position
                 zoom: 18
@@ -25,7 +25,7 @@
             </MapboxMap>
         </div>
 
-    </div>
+    <!-- </div> -->
 </template>
 
 <script setup lang="ts">
