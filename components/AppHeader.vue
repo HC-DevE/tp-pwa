@@ -88,13 +88,13 @@ const links = ref([[{
 
 </script>
 
-<template #header>
-  <!-- <div> -->
-    <UHorizontalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" />
+<template>
+  <div class="w-full mx-auto my-0">
+    <UHorizontalNavigation :links="links" class="my-0 py-0 justify-around" />
     <!-- <UVerticalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" /> -->
 
     <!-- battery level -->
     <!-- <p>Battery level: {{ batteryLevel }}%</p>
-    <p v-if="!!batteryCharging">Battery is charging</p>
-  </div> -->
+    <p v-if="!!batteryCharging">Battery is charging</p>-->
+  </div> 
 </template>
