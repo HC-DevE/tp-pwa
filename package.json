@@ -12,6 +12,7 @@
   "dependencies": {
     "@iconify/json": "^2.2.196",
     "@nuxt/ui": "^2.15.0",
+    "nuxi": "^3.11.1",
     "nuxt": "^3.11.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

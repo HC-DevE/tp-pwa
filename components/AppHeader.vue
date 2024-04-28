@@ -45,18 +45,22 @@ const getBatteryLevelIcon = () => {
 const links = ref([[{
   label: 'Home',
   to: '/',
+  color: 'white',
 }, {
   label: 'Géolocalisation',
   icon: 'i-heroicons-map-pin',
-  to: '/geoloc'
+  to: '/geoloc',
+  color: 'white',
 }, {
   label: 'Caméra',
   icon: 'i-heroicons-camera',
-  to: '/camera'
+  to: '/camera',
+  color: 'white',
 }, {
   label: 'Galerie',
   icon: 'i-heroicons-photo',
-  to: '/gallery'
+  to: '/gallery',
+  color: 'white',
 }, {
   label: 'chat',
   icon: 'i-heroicons-chat-bubble-left-right',
@@ -84,13 +88,24 @@ const links = ref([[{
     icon: getBatteryLevelIcon(),
     badge: getBatteryLevel()
   },
+  // dark mode option
+  {
+    label: 'Dark mode',
+    icon: 'i-heroicons-moon',
+    color: 'white',
+  }
 ]]);
+
+const navbarLinksColor = 'white';
 
 </script>
 
 <template>
   <div class="w-full mx-auto my-0">
-    <UHorizontalNavigation :links="links" color="black" class="my-0 py-0 justify-around" />
+    <UHorizontalNavigation :links="links" :color="navbarLinksColor" class="my-0 py-0 justify-around" />
+    <ColorScheme>
+      <USelect v-model="$colorMode.preference" :options="['system', 'light', 'dark']" />
+    </ColorScheme>
     <!-- <UVerticalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" /> -->
 
     <!-- battery level -->

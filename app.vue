@@ -12,11 +12,11 @@
     <!-- <VitePwaManifest /> -->
     <NuxtPwaManifest />
     <!-- <UCard> -->
-      <!-- <template> -->
-        <!-- <UContainer> -->
-          <NuxtPage />
-        <!-- </UContainer> -->
-      <!-- </template> -->
+    <!-- <template> -->
+    <!-- <UContainer> -->
+    <NuxtPage />
+    <!-- </UContainer> -->
+    <!-- </template> -->
     <!-- </UCard> -->
     <UNotifications />
   </NuxtLayout>
