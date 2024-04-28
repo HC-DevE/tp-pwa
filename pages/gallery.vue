@@ -10,13 +10,17 @@
 </template>
 
 <script setup  lang="ts">
+import { ref, onBeforeMount } from 'vue';
+
+let photos = ref([]);
+onBeforeMount(()=>{
+    // import photos from the local storage
+    photos = JSON.parse(localStorage.getItem('pictures')) || [];
+})
 let index = 0;
-// import photos from the local storage
-const photos = JSON.parse(localStorage.getItem('pictures')) || [];
-console.log('photos', photos);
 
 const deletePic = (index: number) => {
-    photos.splice(index, 1);
+    photos.value.splice(index, 1);
     localStorage.setItem('pictures', JSON.stringify(photos));
 }
 
