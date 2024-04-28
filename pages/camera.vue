@@ -16,6 +16,7 @@ const sendNotification = () => {
 
 const video = ref<HTMLVideoElement | null>(null);
 const image = ref(null);
+const pictures = ref([]);
 
 const startStream = async () => {
     try {
@@ -25,7 +26,6 @@ const startStream = async () => {
         });
         const videoTracks = stream.getVideoTracks();
         const track = videoTracks[0];
-        console.log('video value',video.value);
         alert(`Getting video from: ${track.label}`);
         if (video.value) {
             video.value.srcObject = stream;
@@ -76,20 +76,28 @@ const takePicture = () => {
         canvas.getContext('2d')?.drawImage(video.value, 0, 0);
         const data = canvas.toDataURL('image/png');
         image.value = data;
+        addPictureToLocalStorage(data);
         sendNotification();
     }
 };
+
+const addPictureToLocalStorage = (data: string) => {
+    const pictures = JSON.parse(localStorage.getItem('pictures')) || [];
+    pictures.push(data);
+    localStorage.setItem('pictures', JSON.stringify(pictures));
+};
+
 </script>
 
 <template>
     <div>
         <h1>Camera test</h1>
         <p>
-            <UButton @click="takePicture" size="sm">Take picture</UButton>
+            <UButton color="blue" @click="takePicture" size="sm">Take picture</UButton>
         </p>
         <p>
-            <UButton color="green" @click="startStream" size="sm">Start stream</UButton>
-            <UButton color="red" @click="stopStream" size="sm">Stop stream</UButton>
+            <UButton variant="link" color="green" @click="startStream" size="sm">Start stream</UButton>
+            <UButton variant="link" color="red" @click="stopStream" size="sm">Stop stream</UButton>
         </p>
         <p>
             <video ref="video" autoplay></video>

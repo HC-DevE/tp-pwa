@@ -19,6 +19,9 @@
   "devDependencies": {
     "@nuxtjs/pwa": "^3.3.5",
     "@vite-pwa/nuxt": "^0.6.0",
+    "mapbox-gl": "^3.2.0",
+    "nuxt-icon": "^0.6.10",
+    "nuxt-mapbox": "^1.5.9",
     "vite-plugin-pwa": "^0.19.7"
   }
 }

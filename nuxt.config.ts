@@ -3,13 +3,45 @@ import { defineNuxtConfig } from "nuxt/config";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   pages: true,
-  modules: ["@nuxt/ui", "@vite-pwa/nuxt"],
+  modules: [
+    "@nuxt/ui",
+    "@vite-pwa/nuxt",
+    "nuxt-icon",
+    "nuxt-mapbox",
+    "@nuxtjs/tailwindcss",
+  ],
   ui: {
     global: true,
     icons: ["mdi", "simple-icons"],
   },
   colorMode: {
-    preference: 'light'
+    preference: "light",
+  },
+  tailwindcss: {
+    config: {
+      theme: {
+        extend: {
+          colors: {
+            "chathams-blue": {
+              "50": "#f3f7fc",
+              "100": "#e6f0f8",
+              "200": "#c8dfef",
+              "300": "#97c5e2",
+              "400": "#5fa6d1",
+              "500": "#3a8bbd",
+              "600": "#2a6f9f",
+              "700": "#22577e",
+              "800": "#204c6c",
+              "900": "#20415a",
+              "950": "#15293c",
+            },
+          },
+        },
+      },
+    },
+  },
+  mapbox: {
+    accessToken: process.env.MAPBOX_TOKEN,
   },
   pwa: {
     manifest: {
@@ -17,7 +49,8 @@ export default defineNuxtConfig({
       short_name: "Welfare App",
       description: "My incredible Welfare app",
       lang: "en",
-      theme_color: "#000000",
+      theme_color: "chathams-blue",
+      // theme_color: "#000000",
       icons: [
         {
           src: "android-192x192.png",
@@ -35,20 +68,36 @@ export default defineNuxtConfig({
     registerType: "autoUpdate",
     workbox: {
       navigateFallback: "/",
-      runtimeCaching:[
-        {
-          urlPattern: ({ url }) => { return url.pathname.startsWith('/api') },
-          handler: 'CacheFirst' as const,
-          options: {
-            cacheName: 'api-cache',
-            cacheableResponse: { statuses: [0, 200] }
-          }
-        }
-      ]
+      // runtimeCaching: [
+      //   {
+      //     urlPattern: "/",
+      //     handler: "NetworkFirst",
+      //   },
+      //   // {
+      //   //   urlPattern: /^https:\/\/api\.mapbox\.com\/.*/i,
+      //   //   handler: "CacheFirst",
+      //   //   options: {
+      //   //     cacheName: "mapbox-cache",
+      //   //     cacheableResponse: {
+      //   //       statuses: [0, 200],
+      //   //     },
+      //   //   },
+      //   // },
+      //   {
+      //     urlPattern: ({ url }) => {
+      //       return url.pathname.startsWith("/api");
+      //     },
+      //     handler: "CacheFirst" as const,
+      //     options: {
+      //       cacheName: "api-cache",
+      //       cacheableResponse: { statuses: [0, 200] },
+      //     },
+      //   },
+      // ],
     },
     client: {
       installPrompt: true,
-      periodicSyncForUpdates: 3600 // 360 for testing only
+      periodicSyncForUpdates: 3600, // 360 for testing only
     },
     devOptions: {
       enabled: true,
@@ -57,8 +106,8 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1, maximum-scale=1",
       title: "Welfare App",
       // meta: [
       //   {
@@ -80,8 +129,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      bucketUrl: process.env.BUCKET_URL,
+      MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
     },
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 });
