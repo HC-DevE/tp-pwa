@@ -66,8 +66,8 @@ export default defineNuxtConfig({
     },
     injectRegister: "auto",
     registerType: "autoUpdate",
-    workbox: {
-      navigateFallback: "/",
+    // workbox: {
+      // navigateFallback: "/",
       // runtimeCaching: [
       //   {
       //     urlPattern: "/",
@@ -94,7 +94,7 @@ export default defineNuxtConfig({
       //     },
       //   },
       // ],
-    },
+    // },
     client: {
       installPrompt: true,
       periodicSyncForUpdates: 3600, // 360 for testing only

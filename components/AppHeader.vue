@@ -90,7 +90,7 @@ const links = ref([[{
 
 <template>
   <div class="w-full mx-auto my-0">
-    <UHorizontalNavigation :links="links" class="my-0 py-0 justify-around" />
+    <UHorizontalNavigation :links="links" color="black" class="my-0 py-0 justify-around" />
     <!-- <UVerticalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" /> -->
 
     <!-- battery level -->
