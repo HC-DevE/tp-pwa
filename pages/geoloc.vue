@@ -6,7 +6,7 @@
                 <UButton @click="getLocation" color="chathams-blue">Get location</UButton>
             </p>
         </div>
-        <div v-if="!!location" class="h-screen">
+        <div v-else-if="!!location" class="h-screen">
             <MapboxMap class="" map-id="{ID}" :options="{
                 style: 'mapbox://styles/hc-xdev/clufnmhuj00fd01r21qrah976', // style URL
                 center: [location.longitude, location.latitude], // starting position
