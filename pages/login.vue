@@ -1,9 +1,9 @@
-<!-- login page
+<!-- login page -->
 <template>
   <section>
     <p>This page will be displayed at the /login route.</p>
   </section>
-</template> -->
+</template>
 
 <!-- Define the script for this component.  -->
 <!-- <script>
