@@ -89,14 +89,18 @@ const links = ref([[{
     badge: getBatteryLevel()
   },
   // dark mode option
-  {
-    label: 'Dark mode',
-    icon: 'i-heroicons-moon',
-    color: 'white',
-  }
+  // {
+  //   label: 'Dark mode',
+  //   icon: 'i-heroicons-moon',
+  //   color: 'white',
+  // }
 ]]);
 
 const navbarLinksColor = 'white';
+
+const icon = 'i-heroicons-moon' || 'i-heroicons-sun';
+// define the icon depending on the options of the options of the select for the dark mode switcher
+
 
 </script>
 
@@ -104,7 +108,7 @@ const navbarLinksColor = 'white';
   <div class="w-full mx-auto my-0">
     <UHorizontalNavigation :links="links" :color="navbarLinksColor" class="my-0 py-0 justify-around" />
     <ColorScheme>
-      <USelect v-model="$colorMode.preference" :options="['system', 'light', 'dark']" />
+      <USelect v-model="$colorMode.preference" color="white" :icon="icon" variant="outline" :options="['system', 'light', 'dark']" />
     </ColorScheme>
     <!-- <UVerticalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" /> -->
 
