@@ -98,7 +98,9 @@ const links = ref([[{
 
 const navbarLinksColor = 'white';
 
-const icon = 'i-heroicons-moon' || 'i-heroicons-sun';
+const colorMode = useColorMode();
+const icon = colorMode.preference === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun';
+
 // define the icon depending on the options of the options of the select for the dark mode switcher
 
 
