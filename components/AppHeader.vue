@@ -27,6 +27,7 @@ onBeforeMount(() => {
     function updateLevelInfo() {
       batteryLevel.value = battery.level * 100;
       links.value[1][1].badge = batteryLevel.value;
+      links.value[1][1].icon = getBatteryLevelIcon();
     }
   });
 });
@@ -86,7 +87,8 @@ const links = ref([[{
     // battery level
     label: '',
     icon: getBatteryLevelIcon(),
-    badge: getBatteryLevel()
+    badge: getBatteryLevel(),
+    time: 'now',
   },
   // dark mode option
   // {

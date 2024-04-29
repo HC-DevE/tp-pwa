@@ -17,7 +17,6 @@ const sendNotification = () => {
 
 const video = ref<HTMLVideoElement | null>(null);
 const image = ref(null);
-const pictures = ref([]);
 
 const startStream = async () => {
     try {
@@ -107,7 +106,8 @@ const addPictureToLocalStorage = (data: string) => {
             <video ref="video" autoplay></video>
         </p>
         <p>
-            <img v-if="image" :src="image" alt="Picture" />
+            <!-- <img v-if="image" :src="image" alt="Picture" /> -->
+            <Img v-if="image" alt="Picture">{{ image }}</Img>
         </p>
 
     </div>
