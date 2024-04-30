@@ -9,6 +9,8 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "nuxt-mapbox",
     "@nuxtjs/tailwindcss",
+    "@nuxt/image",
+    "@pinia/nuxt",
   ],
   ui: {
     global: true,
@@ -132,5 +134,5 @@ export default defineNuxtConfig({
       MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
     },
   },
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 });

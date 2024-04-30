@@ -1,13 +1,13 @@
 <template>
-    <!-- <div class="flex-1 h-screen right-0"> -->
-        <div v-if="!location" >
+    <UCard class="flex-1 h-screen">
+        <UContainer class="flex  justify-center items-center flex-col" v-if="!location">
             <h1>Get Location</h1>
             <p>
                 <UButton @click="getLocation" color="chathams-blue">Get location</UButton>
             </p>
-        </div>
-        <div v-else-if="!!location" class="h-screen">
-            <MapboxMap class="" map-id="{ID}" :options="{
+        </UContainer>
+        <UContainer v-else-if="!!location" class="h-screen flex justify-center">
+            <MapboxMap map-id="{ID}" :options="{
                 style: 'mapbox://styles/hc-xdev/clufnmhuj00fd01r21qrah976', // style URL
                 center: [location.longitude, location.latitude], // starting position
                 zoom: 18
@@ -17,19 +17,17 @@
                     <MapboxDefaultPopup popup-id="popup1" :lnglat="[0, 0]" :options="{
                         closeOnClick: false
                     }">
-                        <h1 class="test">
+                        <h1 class="dark:text-white">
                             Position actuelle
                         </h1>
                     </MapboxDefaultPopup>
                 </MapboxDefaultMarker>
             </MapboxMap>
-        </div>
-
-    <!-- </div> -->
+        </UContainer>
+    </UCard>
 </template>
 
 <script setup lang="ts">
-import type { _cursor } from '#tailwind-config/theme';
 import { ref } from 'vue';
 const toast = useToast();
 

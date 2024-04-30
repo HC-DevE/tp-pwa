@@ -31,10 +31,10 @@ onBeforeMount(() => {
   });
 });
 
-  const getBatteryLevel = () => {
-    const batteryValue = batteryLevel.value ? +batteryLevel.value : 0;
-    return `${batteryValue.toString()} %`;
-  };
+const getBatteryLevel = () => {
+  const batteryValue = batteryLevel.value ? +batteryLevel.value : 0;
+  return `${batteryValue.toString()} %`;
+};
 
 
 const getBatteryLevelIcon = () => {
@@ -99,23 +99,37 @@ const links = ref([[{
 const navbarLinksColor = 'white';
 
 const colorMode = useColorMode();
-const icon = colorMode.preference === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun';
+const icon = ref<string>(colorMode.value === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun');
 
-// define the icon depending on the options of the options of the select for the dark mode switcher
+const testIcon = colorMode.value === 'light' ? 'i-heroicons-sun' : 'i-heroicons-moon';
+
+const selected = ref(false);
+const iconColor = ref('white');
+// watchEffect(() => {
+//   icon.value = colorMode.value === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun';
+//   iconColor.value = colorMode.value === 'dark' ? 'white' : 'black';
+//   selected.value = colorMode.value === 'dark' ? true : false;
+// });
+
 
 
 </script>
 
 <template>
   <div class="w-full mx-auto my-0">
-    <UHorizontalNavigation :links="links" :color="navbarLinksColor" class="my-0 py-0 justify-around" />
+    <UHorizontalNavigation :links="links" :color="navbarLinksColor" class="my-0 py-0 justify-around text-white" />
     <ColorScheme>
-      <USelect v-model="$colorMode.preference" color="white" :icon="icon" variant="outline" :options="['system', 'light', 'dark']" />
+      <!-- <USelect v-model="colorMode.preference" color="white" :icon="icon" variant="outline"
+        :options="['system', 'light', 'dark']" class="border w-24 h-8 dark:bg-gray-900 dark:text-white dark:border-gray-700" /> -->
+      <!-- tooggle dark mode -->
+      <UToggle v-model="selected" on-icon="i-heroicons-moon" off-icon="i-heroicons-sun"
+        class="dark:bg-gray-900 dark:text-white dark:border-gray-700"
+        @update:model-value="colorMode.value = selected ? 'dark' : 'light'" />
     </ColorScheme>
     <!-- <UVerticalNavigation :links="links" class="border-b border-gray-300 dark:border-gray-2000" /> -->
 
     <!-- battery level -->
     <!-- <p>Battery level: {{ batteryLevel }}%</p>
     <p v-if="!!batteryCharging">Battery is charging</p>-->
-  </div> 
+  </div>
 </template>

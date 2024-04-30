@@ -11,8 +11,8 @@ import Default from '~/layouts/default.vue';
   </div> -->
   <!-- <default> -->
     <div id="IndexPage" class="w-full overflow-auto">
-      <div class="mx-auto overflow-hidden">
-          <AppAlert />
+      <div class="m-10 overflow-hidden dark:bg-gray-700">
+          <AppAlert class="dark:bg-gray-700" />
         </div>
     </div>
   <!-- </default> -->
