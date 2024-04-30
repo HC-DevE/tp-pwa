@@ -2,6 +2,7 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
+import { useImagesStore } from '~/store/pictures.store';
 
 const sendNotification = () => {
   Notification.requestPermission().then((result) => {
@@ -66,6 +67,7 @@ const stopStream = () => {
 //     });
 // };
 
+const store = useImagesStore();
 
 // // take picture
 const takePicture = () => {
@@ -76,7 +78,8 @@ const takePicture = () => {
         canvas.getContext('2d')?.drawImage(video.value, 0, 0);
         const data = canvas.toDataURL('image/png');
         image.value = data;
-        addPictureToLocalStorage(data);
+        // addPictureToLocalStorage(data);
+        store.addImage(data);
         sendNotification();
     }
 };
@@ -85,6 +88,7 @@ const addPictureToLocalStorage = (data: string) => {
     const pictures = JSON.parse(localStorage.getItem('pictures')) || [];
     pictures.push(data);
     localStorage.setItem('pictures', JSON.stringify(pictures));
+    // document.dispatchEvent(new Event('loadPictures'));
 };
 
 </script>
