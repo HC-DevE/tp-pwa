@@ -69,6 +69,18 @@ const links = ref([[{
   label: 'Stream',
   icon: 'i-heroicons-video-camera',
   to: '/stream'
+},{
+  label: 'OTP',
+  icon: 'i-heroicons-key',
+  to: '/otp-verification'
+}, {
+  label: 'Vibrate',
+  icon: 'i-heroicons-swatch',
+  to: '/vibrate'
+},{
+  label: 'Phone call',
+  icon: 'i-heroicons-phone',
+  to: '/phone-call'
 }, {
   label: 'About',
   icon: 'i-heroicons-information-circle',
