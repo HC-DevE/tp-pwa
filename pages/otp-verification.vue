@@ -23,11 +23,13 @@ const otpCode = ref('');
 // }
 
 async function receiveOTP() {
-    // if ('OTPCredential' in window) {
+    if ('OTPCredential' in window) {
+        alert('WebOTP API supported on this browser!');
+    }
     try {
         const content = await navigator.credentials.get({
             otp: { transport: ['sms'] },
-            signal: abortController.signal // Assurez-vous d'avoir un AbortController si nécessaire
+            // signal: abortController.signal // Assurez-vous d'avoir un AbortController si nécessaire
         });
         alert('Received OTP: ' + content.code); // Affichez le code OTP (à des fins de démonstration uniquement
         otpCode.value = content.code;
