@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-
+const toast = useToast();
 const otpCode = ref('');
 
 // async function receiveOTP() {
@@ -24,17 +24,28 @@ const otpCode = ref('');
 
 async function receiveOTP() {
     if ('OTPCredential' in window) {
-        alert('WebOTP API supported on this browser!');
+        toast.add({
+            id: 'otp',
+            title: 'OTP Message',
+            description: 'WebOTP API supported on this browser!',
+            icon: 'i-heroicons-check-circle',
+        });
     }
     try {
         const content = await navigator.credentials.get({
             otp: { transport: ['sms'] },
             // signal: abortController.signal // Assurez-vous d'avoir un AbortController si nécessaire
         });
+        toast.add({
+            id: 'otp',
+            title: 'OTP Message',
+            description: 'OTP received successfully!',
+            icon: 'i-heroicons-check-circle',
+        });
         alert('Received OTP: ' + content.code); // Affichez le code OTP (à des fins de démonstration uniquement
         otpCode.value = content.code;
         navigator.vibrate([200, 100, 200]); // Vibrate if the code is received
-        if(!!content.code) window.navigator.vibrate(500);
+        if (!!content.code) window.navigator.vibrate(500);
         return content.code;
     } catch (error) {
         console.error('OTP Retrieval failed:', error);
