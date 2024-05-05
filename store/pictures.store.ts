@@ -3,12 +3,12 @@ import { defineStore } from 'pinia';
 
 export const useImagesStore = defineStore('images', {
   state: () => ({
-    images: [''],
+    images: [],
   }),
   actions: {
     loadImages() {
       const storedImages = localStorage.getItem('pictures');
-      this.images = storedImages ? JSON.parse(storedImages) : [];
+      this.images = !!storedImages ? JSON.parse(storedImages) : [];
     },
     addImage(image: string) {
       this.images.push(image);
