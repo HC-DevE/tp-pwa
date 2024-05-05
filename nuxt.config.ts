@@ -66,35 +66,63 @@ export default defineNuxtConfig({
     },
     injectRegister: "auto",
     registerType: "autoUpdate",
-    // workbox: {
-      // navigateFallback: "/",
-      // runtimeCaching: [
-      //   {
-      //     urlPattern: "/",
-      //     handler: "NetworkFirst",
-      //   },
-      //   // {
-      //   //   urlPattern: /^https:\/\/api\.mapbox\.com\/.*/i,
-      //   //   handler: "CacheFirst",
-      //   //   options: {
-      //   //     cacheName: "mapbox-cache",
-      //   //     cacheableResponse: {
-      //   //       statuses: [0, 200],
-      //   //     },
-      //   //   },
-      //   // },
-      //   {
-      //     urlPattern: ({ url }) => {
-      //       return url.pathname.startsWith("/api");
-      //     },
-      //     handler: "CacheFirst" as const,
-      //     options: {
-      //       cacheName: "api-cache",
-      //       cacheableResponse: { statuses: [0, 200] },
-      //     },
-      //   },
-      // ],
-    // },
+    workbox: {
+      navigateFallback: "/",
+      runtimeCaching: [
+        {
+          urlPattern: "/",
+          handler: "NetworkFirst",
+        },
+        {
+          // Cache les fichiers de style et scripts venant de votre application
+          urlPattern:
+            "^https?://localhost:3000/.*\\.(css|js|png|jpg|jpeg|gif|svg|woff|woff2|eot|ttf|otf)$",
+          handler: "StaleWhileRevalidate",
+          method: "GET",
+          options: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          // Cache les requêtes GET pour les autres assets et requêtes
+          urlPattern: "^https?://localhost:3000/.*",
+          handler: "NetworkFirst",
+          method: "GET",
+          options: {
+            networkTimeoutSeconds: 5, // 5 secondes avant de passer au cache si le réseau est lent ou déconnecté
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+        {
+          // Mise en cache des requêtes pour le manifest et les icônes
+          urlPattern: "/_nuxt/icons/.*",
+          handler: "CacheFirst",
+          method: "GET",
+          options: {
+            cacheName: "icon-cache",
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/api\.mapbox\.com\/.*/i,
+          handler: "CacheFirst",
+          options: {
+            cacheName: "mapbox-cache",
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+        {
+          urlPattern: ({ url }) => {
+            return url.pathname.startsWith("/api");
+          },
+          handler: "CacheFirst" as const,
+          options: {
+            cacheName: "api-cache",
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+      ],
+    },
     client: {
       installPrompt: true,
       periodicSyncForUpdates: 3600, // 360 for testing only
