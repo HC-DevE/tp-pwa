@@ -1,7 +1,7 @@
 <template>
     <div id="default" class="h-screen">
 
-      <AppHeader class="w-full flex items-center justify-around px-2 h-10 bg-chathams-blue-800 dark:text-white " />
+      <AppHeader class="fixed z-50 w-full flex items-center justify-around px-2 h-10 bg-chathams-blue-800 dark:text-white " />
       
       <div class="flex w-full mx-auto h-screen">
         <slot />
