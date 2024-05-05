@@ -1,17 +1,17 @@
 <template>
-    <UContainer class="">
-        <!-- <UContainer
+    <UContainer class="flex h-screen">
+        <UContainer
             class="p-6 max-w-sm mx-auto rounded-xl shadow-md flex items-center space-x-4 dark:bg-gray-900 dark:text-white dark:border-gray-700 ">
             <div class="flex-shrink-0">
-                <img class="h-12 w-12" src="i-heroicons-photo" alt="ChitChat Logo">
+                <!-- <img class="h-12 w-12" src="i-heroicons-photo" alt="ChitChat Logo"> -->
             </div>
             <div>
                 <div class="text-xl font-medium dark:text-white">Gallery</div>
                 <p class=" text-gray-500 dark:text-white">Your beautiful photo gallery</p>
             </div>
-        </UContainer> -->
-        <UContainer class="grid grid-cols-3 gap-4 dark:bg-gray-900">
-            <UCard v-for="(picture, index) in images" :key="index"
+        </UContainer>
+        <UContainer v-if="!!store.images && store.images.length > 0" class="grid grid-cols-3 gap-4 dark:bg-gray-900">
+            <UCard v-for="(picture, index) in store.images" :key="index"
                 class="relative overflow-hidden justify-center dark:bg-gray-900">
                 <template #header>
                     Photo {{ index + 1 }}
@@ -21,10 +21,17 @@
                         class="w-full h-auto rounded-lg shadow-md dark:bg-gray-900" alt="Photo" />
                 </template>
                 <template #footer>
+                    <!-- download -->
+                    <UButton label="Download" icon="i-heroicons-arrow-down-tray" size="sm"
+                        @click="downloadPic(picture, index)" variant="ghost"
+                        class="flex w-full justify-center h-10 text-green-600 hover:text-green-500 z-10 dark:bg-gray-900" />
                     <UButton label="Delete" icon="i-heroicons-trash" size="sm" @click="deletePic(index)" variant="ghost"
                         class="flex w-full justify-center h-10 text-red-600 hover:text-red-500 z-10 dark:bg-gray-900" />
                 </template>
             </UCard>
+        </UContainer>
+        <UContainer v-else class="flex justify-center items-center h-full">
+            <h1 class="text-2xl dark:text-white">No picture available</h1>
         </UContainer>
     </UContainer>
 </template>
@@ -32,6 +39,7 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue';
 import { useImagesStore } from '~/store/pictures.store';
+const { $pwa } = useNuxtApp();
 
 // const images = useState('pictures', () => {
 //   const storedImages = localStorage.getItem('pictures');
@@ -61,11 +69,10 @@ import { useImagesStore } from '~/store/pictures.store';
 //     localStorage.setItem('pictures', JSON.stringify(images.value));
 // }
 
+console.log($pwa);
+
 
 const store = useImagesStore();
-const images = ref(store.images);
-
-console.log(images.value);
 
 onBeforeMount(() => {
     store.loadImages();
@@ -73,6 +80,9 @@ onBeforeMount(() => {
 
 onMounted(() => {
     store.loadImages();
+    window.addEventListener('loadPictures', () => {
+        store.loadImages();
+    });
 });
 
 function deletePic(index: number) {
@@ -80,7 +90,15 @@ function deletePic(index: number) {
     store.loadImages();
 }
 
-// store.loadImages();
+
+function downloadPic(image, index) {
+    const a = document.createElement('a');
+    a.href = image;
+    a.download = `photo-${index}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
 
 
 </script>

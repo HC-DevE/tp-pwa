@@ -68,6 +68,24 @@ const stopStream = () => {
 
 const store = useImagesStore();
 
+const onlineStatus = ref(navigator.onLine);
+
+function handleOnlineStatus() {
+  onlineStatus.value = navigator.onLine;
+  if (navigator.onLine) {
+    const picturesToSync = localStorage.getItem('picturesToSync');
+    if (picturesToSync) {
+      // Logic to sync pictures or just clear the queue
+      console.log('Syncing pictures');
+      localStorage.removeItem('picturesToSync');
+      alert('Pictures synced as you are online again!');
+    }
+  }
+}
+
+window.addEventListener('online', handleOnlineStatus);
+window.addEventListener('offline', handleOnlineStatus);
+
 // // take picture
 const takePicture = () => {
     if (video.value) {
@@ -81,13 +99,6 @@ const takePicture = () => {
         store.addImage(data);
         sendNotification();
     }
-};
-
-const addPictureToLocalStorage = (data: string) => {
-    const pictures = JSON.parse(localStorage.getItem('pictures')) || [];
-    pictures.push(data);
-    localStorage.setItem('pictures', JSON.stringify(pictures));
-    // document.dispatchEvent(new Event('loadPictures'));
 };
 
 </script>
