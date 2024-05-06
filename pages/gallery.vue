@@ -1,5 +1,6 @@
 <template>
-    <UContainer class="flex h-screen">
+    <UCard class="flex h-screen">
+        <!-- sidebar panel -->
         <UContainer
             class="p-6 max-w-sm mx-auto rounded-xl shadow-md flex items-center space-x-4 dark:bg-gray-900 dark:text-white dark:border-gray-700 ">
             <div class="flex-shrink-0">
@@ -10,7 +11,8 @@
                 <p class=" text-gray-500 dark:text-white">Your beautiful photo gallery</p>
             </div>
         </UContainer>
-        <UContainer v-if="!!store.images && store.images.length > 0" class="grid grid-cols-3 gap-4 dark:bg-gray-900">
+        <!-- picture gallery area -->
+        <UContainer v-if="!!store.images && store.images.length > 0" class="grid grid-cols-3 gap-4 dark:bg-gray-900 overflow-y-auto">
             <UCard v-for="(picture, index) in store.images" :key="index"
                 class="relative overflow-hidden justify-center dark:bg-gray-900">
                 <template #header>
@@ -33,7 +35,7 @@
         <UContainer v-else class="flex justify-center items-center h-full">
             <h1 class="text-2xl dark:text-white">No picture available</h1>
         </UContainer>
-    </UContainer>
+    </UCard>
 </template>
 
 <script setup lang="ts">
