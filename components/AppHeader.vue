@@ -95,6 +95,18 @@ const links = ref([[{
   to: '/gallery',
   color: 'white',
 }, {
+  label: 'OTP',
+  icon: 'i-heroicons-key',
+  to: '/otp-verification'
+}, {
+  label: 'Vibrate',
+  icon: 'i-heroicons-swatch',
+  to: '/vibrate'
+}, {
+  label: 'Phone call',
+  icon: 'i-heroicons-phone',
+  to: '/phone-call'
+}, {
   label: 'chat',
   icon: 'i-heroicons-chat-bubble-left-right',
   to: '/chat'
