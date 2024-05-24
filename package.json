@@ -11,14 +11,19 @@
   },
   "dependencies": {
     "@iconify/json": "^2.2.196",
+    "@nuxt/image": "^1.6.0",
     "@nuxt/ui": "^2.15.0",
     "nuxi": "^3.11.1",
     "nuxt": "^3.11.1",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "workbox-core": "^7.1.0",
+    "workbox-precaching": "^7.1.0",
+    "workbox-routing": "^7.1.0"
   },
   "devDependencies": {
     "@nuxtjs/pwa": "^3.3.5",
+    "@pinia/nuxt": "^0.5.1",
     "@vite-pwa/nuxt": "^0.6.0",
     "mapbox-gl": "^3.2.0",
     "nuxt-icon": "^0.6.10",

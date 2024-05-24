@@ -3,12 +3,20 @@ import { defineNuxtConfig } from "nuxt/config";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   pages: true,
+  ssr:false,
   modules: [
     "@nuxt/ui",
     "@vite-pwa/nuxt",
     "nuxt-icon",
     "nuxt-mapbox",
     "@nuxtjs/tailwindcss",
+    "@nuxt/image",
+    "@pinia/nuxt",
+    // "nuxt-socket-io"
+  ],
+  plugins: [
+    '~/plugins/init-pictures.ts',
+    '~/plugins/connection-status.ts',
   ],
   ui: {
     global: true,
@@ -44,12 +52,13 @@ export default defineNuxtConfig({
     accessToken: process.env.MAPBOX_TOKEN,
   },
   pwa: {
+    strategies: "injectManifest",
     manifest: {
       name: "Welfare App",
       short_name: "Welfare App",
       description: "My incredible Welfare app",
       lang: "en",
-      theme_color: "chathams-blue",
+      theme_color: "chathams-blue-500",
       // theme_color: "#000000",
       icons: [
         {
@@ -74,32 +83,19 @@ export default defineNuxtConfig({
           handler: "NetworkFirst",
         },
         {
-          // Cache les fichiers de style et scripts venant de votre application
-          urlPattern:
-            "^https?://localhost:3000/.*\\.(css|js|png|jpg|jpeg|gif|svg|woff|woff2|eot|ttf|otf)$",
-          handler: "StaleWhileRevalidate",
-          method: "GET",
-          options: { cacheableResponse: { statuses: [0, 200] } },
-        },
-        {
-          // Cache les requêtes GET pour les autres assets et requêtes
-          urlPattern: "^https?://localhost:3000/.*",
-          handler: "NetworkFirst",
-          method: "GET",
+          urlPattern: '.*',
+          handler: 'NetworkFirst',
+          method: 'GET',
           options: {
-            networkTimeoutSeconds: 5, // 5 secondes avant de passer au cache si le réseau est lent ou déconnecté
-            cacheableResponse: { statuses: [0, 200] },
-          },
-        },
-        {
-          // Mise en cache des requêtes pour le manifest et les icônes
-          urlPattern: "/_nuxt/icons/.*",
-          handler: "CacheFirst",
-          method: "GET",
-          options: {
-            cacheName: "icon-cache",
-            cacheableResponse: { statuses: [0, 200] },
-          },
+            cacheName: 'offlineCache',
+            expiration: {
+              maxEntries: 200,
+              maxAgeSeconds: 60 * 60 * 24 * 7, // Cache pendant une semaine
+            },
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
+          }
         },
         {
           urlPattern: /^https:\/\/api\.mapbox\.com\/.*/i,
@@ -125,7 +121,7 @@ export default defineNuxtConfig({
     },
     client: {
       installPrompt: true,
-      periodicSyncForUpdates: 3600, // 360 for testing only
+      periodicSyncForUpdates: 360, // 360 for testing only
     },
     devOptions: {
       enabled: true,
@@ -137,22 +133,22 @@ export default defineNuxtConfig({
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1, maximum-scale=1",
       title: "Welfare App",
-      // meta: [
-      //   {
-      //     charset: "utf-8",
-      //   },
-      //   {
-      //     name: "viewport",
-      //     content: "width=device-width, initial-scale=1",
-      //   },
-      // ],
-      // link: [
-      //   {
-      //     rel: "icon",
-      //     type: "image/x-icon",
-      //     href: "/favicon.ico",
-      //   },
-      // ],
+      meta: [
+        {
+          charset: "utf-8",
+        },
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1",
+        },
+      ],
+      link: [
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          href: "/favicon.ico",
+        },
+      ],
     },
   },
   runtimeConfig: {
@@ -160,5 +156,5 @@ export default defineNuxtConfig({
       MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
     },
   },
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 });
