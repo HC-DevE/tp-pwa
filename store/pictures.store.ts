@@ -51,11 +51,11 @@ export const usePicturesStore = defineStore("images", {
     },
     async showNotification(message: string) {
       if (Notification.permission === "granted") {
-        const registration = await navigator.serviceWorker.ready;
-        // new Notification(message);
-        await registration.showNotification("Nouvelle photo", {
-          body: message,
-        });
+        // const registration = await navigator.serviceWorker.ready;
+        new Notification(message);
+        // await registration.showNotification("Nouvelle photo", {
+        //   body: message,
+        // });
       }
     },
     // showNotification2(textMessage: string) {
