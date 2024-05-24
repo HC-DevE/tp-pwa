@@ -27,17 +27,21 @@
 import { useConnectionStore } from './store/connection';
 import { usePicturesStore } from './store/pictures.store';
 
+const photoStore = usePicturesStore();
+
 onBeforeMount(
   () => {
     window.addEventListener('online', () => {
-      const photoStore = usePicturesStore();
       photoStore.syncPhotos();
-      photoStore.showNotification('You are back online. Syncing photos...');
+      if(photoStore.unsyncedPictures.length > 0){
+        photoStore.showNotification('You are online. Syncing your photos...');
+      }
     });
-
+    
     window.addEventListener('offline', () => {
-      const photoStore = usePicturesStore();
+      if(photoStore.unsyncedPictures.length > 0){
       photoStore.showNotification('You are offline. Photos will be synced later.');
+      }
     });
 
     const connectionStore = useConnectionStore();

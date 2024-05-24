@@ -29,7 +29,7 @@ export const usePicturesStore = defineStore("images", {
       );
     },
     syncPhotos() {
-      if (navigator.onLine && this.unsyncedPictures) {
+      if (navigator.onLine && this.unsyncedPictures.length > 0) {
         // Synchronize images
         console.log("Synchronizing images...");
         // add the unsynced images to the images and remove t after
@@ -41,10 +41,39 @@ export const usePicturesStore = defineStore("images", {
         this.showNotification("Photos synchronized successfully.");
       }
     },
-    showNotification(message: string) {
+    async showNotification(message: string) {
       if (Notification.permission === "granted") {
-        new Notification(message);
+        const registration = await navigator.serviceWorker.ready;
+        // new Notification(message);
+        await registration.showNotification('Nouvelle photo', {
+          body: message,
+        });
       }
     },
+    // showNotification2(textMessage: string) {
+    //   if ("Notification" in window) {
+    //     Notification.requestPermission().then(async (result) => {
+    //       if (result === "granted") {
+    //         if ('serviceWorker' in navigator && 'Notification' in window) {
+    //           try {
+    //             const registration = await navigator.serviceWorker.ready;
+    //             await registration.showNotification('Nouvelle photo', {
+    //               body: textMessage,
+    //               icon: '/path/to/icon.png', // Remplacez par le chemin de votre icône de notification
+    //             });
+    //           } catch (error) {
+    //             console.error('Failed to display notification:', error);
+    //           }
+    //         } else {
+    //           console.warn('Notifications not supported');
+    //         }
+    //       } else {
+    //         throw new Error("Permission denied")
+    //       }
+    //     })
+    //   } else {
+    //     throw new Error("Notification not supported")
+    //   }
+    // }
   },
 });
