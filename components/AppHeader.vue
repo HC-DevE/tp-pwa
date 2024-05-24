@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useConnectionStore } from '~/store/connection';
+
 const route = useRoute();
 
 // get battery level
@@ -42,6 +44,36 @@ const getBatteryLevelIcon = () => {
   return batteryLevel.value === 100 ? 'i-heroicons-battery-100' : batteryLevel.value >= 50 ? 'i-heroicons-battery-50' : (batteryLevel.value && batteryLevel.value < 50) ? 'i-heroicons-battery-0' : 'i-heroicons-battery-0';
 };
 
+const onlineStatusStore = useConnectionStore();
+
+const wifiIcon = !!onlineStatusStore.online ? 'i-heroicons-wifi' : 'i-heroicons-x-circle';
+
+
+
+
+const navbarLinksColor = 'white';
+
+const colorMode = useColorMode();
+const icon = ref<string>(colorMode.value === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun');
+
+const testIcon = colorMode.value === 'light' ? 'i-heroicons-sun' : 'i-heroicons-moon';
+
+
+const getWifiIcon = () => {
+  if (onlineStatusStore.online) {
+    return 'i-heroicons-wifi';
+  }
+  return 'i-heroicons-x-circle';
+
+};
+
+const selected = ref(false);
+const iconColor = ref('white');
+// watchEffect(() => {
+//   icon.value = colorMode.value === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun';
+//   iconColor.value = colorMode.value === 'dark' ? 'white' : 'black';
+//   selected.value = colorMode.value === 'dark' ? true : false;
+// });
 
 const links = ref([[{
   label: 'Home',
@@ -66,21 +98,15 @@ const links = ref([[{
   label: 'chat',
   icon: 'i-heroicons-chat-bubble-left-right',
   to: '/chat'
-}, {
-  label: 'Stream',
-  icon: 'i-heroicons-video-camera',
-  to: '/stream'
-}, {
-  label: 'About',
-  icon: 'i-heroicons-information-circle',
-  to: '/about'
-}], [
+},], [
   {
     label: 'Profile',
     avatar: {
       src: 'https://avatars.githubusercontent.com/u/739984?v=4'
     },
     to: '/me',
+    icon: wifiIcon,
+    // icon: getWifiIcon(),
     badge: 0
   },
   {
@@ -97,22 +123,6 @@ const links = ref([[{
   //   color: 'white',
   // }
 ]]);
-
-const navbarLinksColor = 'white';
-
-const colorMode = useColorMode();
-const icon = ref<string>(colorMode.value === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun');
-
-const testIcon = colorMode.value === 'light' ? 'i-heroicons-sun' : 'i-heroicons-moon';
-
-const selected = ref(false);
-const iconColor = ref('white');
-// watchEffect(() => {
-//   icon.value = colorMode.value === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun';
-//   iconColor.value = colorMode.value === 'dark' ? 'white' : 'black';
-//   selected.value = colorMode.value === 'dark' ? true : false;
-// });
-
 
 
 </script>

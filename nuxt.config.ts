@@ -3,6 +3,7 @@ import { defineNuxtConfig } from "nuxt/config";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   pages: true,
+  ssr:false,
   modules: [
     "@nuxt/ui",
     "@vite-pwa/nuxt",
@@ -12,6 +13,10 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@pinia/nuxt",
     // "nuxt-socket-io"
+  ],
+  plugins: [
+    '~/plugins/init-pictures.ts',
+    '~/plugins/connection-status.ts',
   ],
   ui: {
     global: true,
@@ -47,6 +52,7 @@ export default defineNuxtConfig({
     accessToken: process.env.MAPBOX_TOKEN,
   },
   pwa: {
+    strategies: "injectManifest",
     manifest: {
       name: "Welfare App",
       short_name: "Welfare App",

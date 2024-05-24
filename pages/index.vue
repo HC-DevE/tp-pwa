@@ -1,58 +1,60 @@
 <script setup lang="ts">
-import Default from '~/layouts/default.vue';
+import { useConnectionStore } from '~/store/connection';
+
 
 const { $pwa } = useNuxtApp();
-const onlineStatus = ref(true);
-// window.addEventListener('online', () => {
-//   onlineStatus.value = true;
-// });
+
+const connectionStore = useConnectionStore();
+const onlineStatus = computed(() => connectionStore.online);
 
 </script>
 
 <template>
   <UContainer class="w-full h-screen">
-  <!-- <div>
+    <!-- <div>
     <h1>Welcome to the homepage</h1>
   </div>
   <div>
     <AppAlert />
   </div> -->
-  <!-- <default> -->
-  <div id="IndexPage" class="w-full overflow-auto">
-    <div class="m-10 overflow-hidden dark:bg-gray-700">
-      <AppAlert class="dark:bg-gray-700" />
+    <!-- <default> -->
+    <div id="IndexPage" class="w-full overflow-auto">
+      <div class="m-10 overflow-hidden dark:bg-gray-700">
+        <AppAlert class="dark:bg-gray-700" />
+      </div>
     </div>
-  </div>
-  <!-- </default> -->
+    <!-- </default> -->
 
-  <!-- <ClientOnly> -->
-      <div v-if="$pwa?.offlineReady || $pwa?.needRefresh">
-        <div class="message">
-          <span v-if="$pwa.offlineReady">
-            App ready to work offline
-          </span>
-          <span v-else>
-            New content available, click on reload button to update.
-          </span>
-        </div>
-        <button v-if="$pwa.needRefresh" @click="$pwa.updateServiceWorker()">
-          Reload
-        </button>
-        <button @click="$pwa.cancelPrompt()">
-          Close
-        </button>
+    <!-- <ClientOnly> -->
+    <div v-if="$pwa?.offlineReady || $pwa?.needRefresh">
+      <div class="message">
+        <span v-if="$pwa.offlineReady">
+          App ready to work offline
+        </span>
+        <span v-else>
+          New content available, click on reload button to update.
+        </span>
       </div>
-      <div v-else>
-        <p>Not offlineready</p>
-      </div>
+      <UButton v-if="$pwa.needRefresh" @click="$pwa.updateServiceWorker()">
+        Reload
+      </UButton>
+      <UButton @click="$pwa.cancelPrompt()">
+        Close
+      </UButton>
+    </div>
+    <div v-else>
+      <p>Not offlineready</p>
+    </div>
+    <div>
+      <!-- is offline -->
       <div>
-        <!-- is offline -->
-        <p v-if="!!onlineStatus">You are online</p>
+        <p v-if="onlineStatus">You are online</p>
         <p v-else>You are offline</p>
       </div>
-      <div class="w-full" v-if="$pwa?.isPWAInstalled === false">
-        <UButton variant="outline" @click="$pwa?.install()">Install PWA</UButton>
-      </div>
-    </UContainer>
+    </div>
+    <div class="w-full" v-if="$pwa?.isPWAInstalled === false">
+      <UButton variant="outline" @click="$pwa?.install()">Install PWA</UButton>
+    </div>
+  </UContainer>
   <!-- </ClientOnly> -->
 </template>

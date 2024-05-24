@@ -5,6 +5,7 @@
             class="p-6 max-w-sm mx-auto rounded-xl shadow-md flex items-center space-x-4 dark:bg-gray-900 dark:text-white dark:border-gray-700 ">
             <div class="flex-shrink-0">
                 <!-- <img class="h-12 w-12" src="i-heroicons-photo" alt="ChitChat Logo"> -->
+                <NuxtImg src="i-heroicons-gallery" />
             </div>
             <div>
                 <div class="text-xl font-medium dark:text-white">Gallery</div>
@@ -39,8 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
-import { useImagesStore } from '~/store/pictures.store';
+import { usePicturesStore } from '~/store/pictures.store';
+
 const { $pwa } = useNuxtApp();
 
 // const images = useState('pictures', () => {
@@ -74,22 +75,22 @@ const { $pwa } = useNuxtApp();
 console.log($pwa);
 
 
-const store = useImagesStore();
+const store = usePicturesStore();
 
 onBeforeMount(() => {
-    store.loadImages();
+    store.loadPhotos();
 });
 
 onMounted(() => {
-    store.loadImages();
+    store.loadPhotos();
     window.addEventListener('loadPictures', () => {
-        store.loadImages();
+        store.loadPhotos();
     });
 });
 
 function deletePic(index: number) {
-    store.removeImage(index);
-    store.loadImages();
+    store.deletePhoto(index);
+    store.loadPhotos();
 }
 
 
