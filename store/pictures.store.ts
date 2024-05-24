@@ -37,7 +37,7 @@ export const usePicturesStore = defineStore("images", {
       );
     },
     syncPhotos() {
-      if (navigator.onLine && this.unsyncedPictures.length > 0) {
+      if (navigator.onLine) {
         // Synchronize images
         console.log("Synchronizing images...");
         // add the unsynced images to the images and remove t after
