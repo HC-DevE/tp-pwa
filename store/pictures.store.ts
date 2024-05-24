@@ -10,9 +10,17 @@ export const usePicturesStore = defineStore("images", {
   }),
   actions: {
     addPhoto(newPhoto: string) {
-      this.images.push(newPhoto);
-      localStorage.setItem("pictures", JSON.stringify(this.images));
-      this.syncPhotos();
+      try {
+        this.images.push(newPhoto);
+        localStorage.setItem("pictures", JSON.stringify(this.images));
+        this.syncPhotos();
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+          this.showNotification('Quota of 5MB exceeded. Cannot save more photos.');
+        } else {
+          console.error('Error adding photo:', error);
+        }
+      }
     },
     deletePhoto(index: number) {
       this.images.splice(index, 1);
@@ -45,7 +53,7 @@ export const usePicturesStore = defineStore("images", {
       if (Notification.permission === "granted") {
         const registration = await navigator.serviceWorker.ready;
         // new Notification(message);
-        await registration.showNotification('Nouvelle photo', {
+        await registration.showNotification("Nouvelle photo", {
           body: message,
         });
       }

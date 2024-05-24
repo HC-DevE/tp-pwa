@@ -6,6 +6,7 @@ const route = useRoute();
 // get battery level
 let batteryLevel = ref(0);
 let batteryCharging = ref(false);
+let wifiIcon = ref('i-heroicons-wifi');
 
 onBeforeMount(() => {
   navigator.getBattery().then((battery) => {
@@ -45,8 +46,9 @@ const getBatteryLevelIcon = () => {
 };
 
 const onlineStatusStore = useConnectionStore();
+const onlineStatus = computed(() => onlineStatusStore.online);
 
-const wifiIcon = !!onlineStatusStore.online ? 'i-heroicons-wifi' : 'i-heroicons-x-circle';
+wifiIcon.value = onlineStatus ? 'i-heroicons-wifi' : 'i-heroicons-x-circle';
 
 
 
@@ -60,7 +62,7 @@ const testIcon = colorMode.value === 'light' ? 'i-heroicons-sun' : 'i-heroicons-
 
 
 const getWifiIcon = () => {
-  if (onlineStatusStore.online) {
+  if (onlineStatus) {
     return 'i-heroicons-wifi';
   }
   return 'i-heroicons-x-circle';
@@ -85,16 +87,6 @@ const links = ref([[{
   to: '/geoloc',
   color: 'white',
 }, {
-  label: 'Caméra',
-  icon: 'i-heroicons-camera',
-  to: '/camera',
-  color: 'white',
-}, {
-  label: 'Galerie',
-  icon: 'i-heroicons-photo',
-  to: '/gallery',
-  color: 'white',
-}, {
   label: 'OTP',
   icon: 'i-heroicons-key',
   to: '/otp-verification'
@@ -107,6 +99,16 @@ const links = ref([[{
   icon: 'i-heroicons-phone',
   to: '/phone-call'
 }, {
+  label: 'Caméra',
+  icon: 'i-heroicons-camera',
+  to: '/camera',
+  color: 'white',
+}, {
+  label: 'Galerie',
+  icon: 'i-heroicons-photo',
+  to: '/gallery',
+  color: 'white',
+}, {
   label: 'chat',
   icon: 'i-heroicons-chat-bubble-left-right',
   to: '/chat'
@@ -117,8 +119,8 @@ const links = ref([[{
       src: 'https://avatars.githubusercontent.com/u/739984?v=4'
     },
     to: '/me',
-    icon: wifiIcon,
-    // icon: getWifiIcon(),
+    // icon: wifiIcon,
+    icon: getWifiIcon(),
     badge: 0
   },
   {
